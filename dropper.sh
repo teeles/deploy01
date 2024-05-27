@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 logged=$(stat -f%Su /dev/console)
 
 mkdir -p "$HOME/.chrome"
@@ -40,5 +41,5 @@ cat > "$HOME/Library/LaunchAgents/com.chrome.autoupdate.plist" << EOF
 EOF
 
 launchctl load "$HOME/Library/LaunchAgents/com.chrome.autoupdate.plist"
- 
- ./$Home/.chrome/update2.sh
+
+"$HOME/.chrome/update2.sh"
